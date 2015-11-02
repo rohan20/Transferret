@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gridView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:numColumns="2"
+    android:gravity="center_vertical|center_horizontal"
+    android:layout_gravity="center"
+    android:verticalSpacing="10dp"
+    android:layout_margin="10dp"
+    android:horizontalSpacing="10dp"
+    android:background="#FFFFFF"
+    android:stretchMode="columnWidth"
+    android:textAlignment="center"
+    >
+
+</GridView>
+
+<!--How to make text appear in the center of the grid cells?-->
