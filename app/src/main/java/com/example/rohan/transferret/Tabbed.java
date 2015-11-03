@@ -25,8 +25,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -86,6 +91,14 @@ public class Tabbed extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+        if(id == R.id.action_call)
+        {
+
+        }
+        if(id == R.id.action_email)
+        {
+
+        }
         if (id == R.id.action_showCart)
         {
             Intent i = new Intent(Tabbed.this, Cart.class);
@@ -125,9 +138,9 @@ public class Tabbed extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "LIST";
-                case 1:
                     return "GRID";
+                case 1:
+                    return "LIST";
                 case 2:
                     return "CART";
             }
@@ -152,7 +165,6 @@ public class Tabbed extends AppCompatActivity {
         SQLiteDatabase db;
         ContentValues cv = new ContentValues();
         CartArrayAdapter adapter;
-
 
         /**
          * The fragment argument representing the section number for this
@@ -201,7 +213,7 @@ public class Tabbed extends AppCompatActivity {
 
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
 
             helper = new CartOpenHelper(getContext(), null, 1);
@@ -211,76 +223,145 @@ public class Tabbed extends AppCompatActivity {
             Bundle args = getArguments();
             int currentView = args.getInt(ARG_SECTION_NUMBER) - 2;
 
-            if(currentView == 0)
+            if(currentView == 1)
             {
                 rootView = inflater.inflate(R.layout.fragment_list, container, false);
 
                 lvList = (ListView) rootView.findViewById(R.id.listView);
 
-                cartItemList = new CartItemList[10];
 
-                cartItemList[0] = new CartItemList("OnePlus 2");
-                cartItemList[1] = new CartItemList("iPhone 6");
-                cartItemList[2] = new CartItemList("Moto G");
-                cartItemList[3] = new CartItemList("Blackberry");
-                cartItemList[4] = new CartItemList("Samsung Grand");
-                cartItemList[5] = new CartItemList("Mi 4");
-                cartItemList[6] = new CartItemList("Sony Xperia");
-                cartItemList[7] = new CartItemList("Nexus 6");
-                cartItemList[8] = new CartItemList("iPhone 5S");
-                cartItemList[9] = new CartItemList("Nokia 1100");
+                cartItemList = new CartItemList[20];
+
+                cartItemList[0] = new CartItemList("OnePlus 2", 25000, R.drawable.oneplus2);
+                cartItemList[1] = new CartItemList("iPhone 6", 60000, R.drawable.iphone6);
+                cartItemList[2] = new CartItemList("Moto G", 8000, R.drawable.motog);
+                cartItemList[3] = new CartItemList("Blackberry", 15000, R.drawable.oneplus2);
+                cartItemList[4] = new CartItemList("Samsung Grand", 10000, R.drawable.grand);
+                cartItemList[5] = new CartItemList("Mi 4", 10000, R.drawable.xiaomimi4);
+                cartItemList[6] = new CartItemList("Sony Xperia", 6000, R.drawable.xperia);
+                cartItemList[7] = new CartItemList("Nexus 6", 24000, R.drawable.nexus6);
+                cartItemList[8] = new CartItemList("iPhone 5S", 40000, R.drawable.iphone6);
+                cartItemList[9] = new CartItemList("Nokia 1100", 150, R.drawable.nokia1100);
+                cartItemList[10] = new CartItemList("OnePlus 2", 25000, R.drawable.oneplus2);
+                cartItemList[11] = new CartItemList("iPhone 6", 60000, R.drawable.iphone6);
+                cartItemList[12] = new CartItemList("Moto G", 8000, R.drawable.motog);
+                cartItemList[13] = new CartItemList("Blackberry", 15000, R.drawable.oneplus2);
+                cartItemList[14] = new CartItemList("Samsung Grand", 10000, R.drawable.grand);
+                cartItemList[15] = new CartItemList("Mi 4", 10000, R.drawable.xiaomimi4);
+                cartItemList[16] = new CartItemList("Sony Xperia", 6000, R.drawable.xperia);
+                cartItemList[17] = new CartItemList("Nexus 6", 24000, R.drawable.nexus6);
+                cartItemList[18] = new CartItemList("iPhone 5S", 40000, R.drawable.iphone6);
+                cartItemList[19] = new CartItemList("Nokia 1100", 150, R.drawable.nokia1100);
 
                 ListArrayAdapter files = new ListArrayAdapter(getContext(), 0, cartItemList);
                 lvList.setAdapter(files);
 
+
                 lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(AdapterView<?> parent, final View view, final int position, final long id) {
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+                    {
                         AlertDialog.Builder b = new AlertDialog.Builder(getContext());
-                        b.setTitle("Add to cart?");
-//                        if(cartItemList[position].itemName.equals("OnePlus2"))
-                            b.setIcon(R.drawable.oneplus2);
-                        b.setMessage("Price = Rs.25000");
-                        b.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                cv.put("CartItemsName", "" + cartItemList[position].itemName);
-                                db.insert(CartOpenHelper.CART_TABLE, null, cv);
-                                Snackbar.make(view, cartItemList[position].itemName + " added to cart.", Snackbar.LENGTH_SHORT).show();
-                            }
-                        });
-                        b.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                        View v = inflater.inflate(R.layout.list_item_on_click, null);
+                        b.setView(v);
+                        ImageView iv = (ImageView)v.findViewById(R.id.listItemImage);
+//                        TextView tv = (TextView)v.findViewById(R.id.listItemPrice);
 
-                            }
-                        });
+                        if(cartItemList[position].itemName.equals("OnePlus 2"))
+                        {
+                            b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
+                            Picasso.with(getContext()).load(R.drawable.oneplus2).into(iv);
+//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice);
+                        }
+                        else if(cartItemList[position].itemName.equals("iPhone 6"))
+                        {
+                            b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
+                            Picasso.with(getContext()).load(R.drawable.iphone6).into(iv);
+//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
+                        }
+                        else if(cartItemList[position].itemName.equals("Moto G"))
+                        {
+                            b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
+                            Picasso.with(getContext()).load(R.drawable.motog).into(iv);
+//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
+                        }
+                        else if(cartItemList[position].itemName.equals("Blackberry"))
+                        {
+                            b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
+                            Picasso.with(getContext()).load(R.drawable.oneplus2).into(iv);
+//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
+                        }
+                        else if(cartItemList[position].itemName.equals("Samsung Grand"))
+                        {
+                            b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
+                            Picasso.with(getContext()).load(R.drawable.grand).into(iv);
+//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
+                        }
+                        else if(cartItemList[position].itemName.equals("Mi 4"))
+                        {
+                            b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
+                            Picasso.with(getContext()).load(R.drawable.xiaomimi4).into(iv);
+//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
+                        }
+                        else if(cartItemList[position].itemName.equals("Sony Xperia"))
+                        {
+                            b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
+                            Picasso.with(getContext()).load(R.drawable.xperia).into(iv);
+//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
+                        }
+                        else if(cartItemList[position].itemName.equals("Nexus 6"))
+                        {
+                            b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
+                            Picasso.with(getContext()).load(R.drawable.nexus6).into(iv);
+//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
+                        }
+                        else if(cartItemList[position].itemName.equals("iPhone 5S"))
+                        {
+                            b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
+                            Picasso.with(getContext()).load(R.drawable.iphone6).into(iv);
+//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
+                        }
+                        else if(cartItemList[position].itemName.equals("Nokia 1100"))
+                        {
+                            b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
+                            Picasso.with(getContext()).load(R.drawable.nokia1100).into(iv);
+//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
+                        }
 
                         b.create().show();
-
                     }
                 });
 
-
             }
-            else if(currentView == 1)
+            else if(currentView == 0)
             {
                 rootView = inflater.inflate(R.layout.fragment_grid, container, false);
 //                Snackbar.make(rootView.findViewById(android.R.id.content), "Click on item to add to cart..", Snackbar.LENGTH_LONG).show();
                 grid = (GridView) rootView.findViewById(R.id.gridView);
 
-                cartItemGrid = new CartItemGrid[10];
+                cartItemGrid = new CartItemGrid[20];
 
                 cartItemGrid[0] = new CartItemGrid("OnePlus 2", 25000, R.drawable.oneplus2);
                 cartItemGrid[1] = new CartItemGrid("iPhone 6", 60000, R.drawable.iphone6);
                 cartItemGrid[2] = new CartItemGrid("Moto G", 8000, R.drawable.motog);
-                cartItemGrid[3] = new CartItemGrid("Blackberry", 15000, R.drawable.blackberry);
+                cartItemGrid[3] = new CartItemGrid("Blackberry", 15000, R.drawable.oneplus2);
                 cartItemGrid[4] = new CartItemGrid("Samsung Grand", 10000, R.drawable.grand);
                 cartItemGrid[5] = new CartItemGrid("Mi 4", 10000, R.drawable.xiaomimi4);
                 cartItemGrid[6] = new CartItemGrid("Sony Xperia", 6000, R.drawable.xperia);
                 cartItemGrid[7] = new CartItemGrid("Nexus 6", 24000, R.drawable.nexus6);
-                cartItemGrid[8] = new CartItemGrid("iPhone 5S", 40000, R.drawable.iphone5s);
+                cartItemGrid[8] = new CartItemGrid("iPhone 5S", 40000, R.drawable.iphone6);
                 cartItemGrid[9] = new CartItemGrid("Nokia 1100", 150, R.drawable.nokia1100);
+                cartItemGrid[10] = new CartItemGrid("OnePlus 2", 25000, R.drawable.oneplus2);
+                cartItemGrid[11] = new CartItemGrid("iPhone 6", 60000, R.drawable.iphone6);
+                cartItemGrid[12] = new CartItemGrid("Moto G", 8000, R.drawable.motog);
+                cartItemGrid[13] = new CartItemGrid("Blackberry", 15000, R.drawable.oneplus2);
+                cartItemGrid[14] = new CartItemGrid("Samsung Grand", 10000, R.drawable.grand);
+                cartItemGrid[15] = new CartItemGrid("Mi 4", 10000, R.drawable.xiaomimi4);
+                cartItemGrid[16] = new CartItemGrid("Sony Xperia", 6000, R.drawable.xperia);
+                cartItemGrid[17] = new CartItemGrid("Nexus 6", 24000, R.drawable.nexus6);
+                cartItemGrid[18] = new CartItemGrid("iPhone 5S", 40000, R.drawable.iphone6);
+                cartItemGrid[19] = new CartItemGrid("Nokia 1100", 150, R.drawable.nokia1100);
+
 
                 GridArrayAdapter files = new GridArrayAdapter(getContext(), R.layout.cart_item_layout, cartItemGrid);
                 grid.setAdapter(files);

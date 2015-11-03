@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:id="@+id/coordinatorLayout"
-        tools:context="com.example.rohan.transferret.Cart">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/coordinatorLayout"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.rohan.transferret.Cart">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
+        android:background="#000000"
+        app:layout_behavior="com.example.rohan.transferret.CustomSnackbarPopUp"
         android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
@@ -23,18 +24,17 @@
             android:background="@color/colorPrimary"
             android:theme="@style/AppTheme.AppBarOverlay">
 
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:layout_gravity="center_horizontal">
+
+
+            </android.support.v7.widget.Toolbar>
+
         </android.support.design.widget.AppBarLayout>
-
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:layout_gravity="center_horizontal">
-
-
-        </android.support.v7.widget.Toolbar>
 
         <ListView
             android:layout_marginTop="10dp"
@@ -44,24 +44,23 @@
             android:layout_height="0dp"
             android:layout_weight="5"
             android:id="@+id/cartListView2"
+            android:layout_marginBottom="65dp"
             >
 
         </ListView>
 
 
             <TextView
+            android:layout_marginTop="66dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/colorAccent"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
             android:layout_weight="0.75"
-            android:textStyle="bold"
-            android:text="Total Cart Value = Rs. 2850"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="#FFFFFF"
+            android:text="Total Cart Value = Rs. 0"
             android:gravity="center"
             android:textSize="20sp"
             android:id="@+id/totalValue"
-            app:layout_anchor="@id/coordinatorLayout"
             />
 
     </LinearLayout>

@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.rohan.transferret.Tabbed">
 
+    <item android:id="@+id/action_call" android:title="Call Transferret"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/action_email" android:title="Email Transferret"
+        android:orderInCategory="99" app:showAsAction="never" />
+
     <item android:id="@+id/action_showCart" android:title="View Cart"
         android:icon="@drawable/ic_local_grocery_store_white_36dp"
         android:orderInCategory="100" app:showAsAction="always" />

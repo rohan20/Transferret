@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 import java.util.Random;
 
@@ -43,7 +45,7 @@ public class GridArrayAdapter extends ArrayAdapter
             vh.tvItemName = (TextView)convertView.findViewById(R.id.name);
             vh.tvItemName.setTypeface(Sitka);
             vh.tvItemPrice = (TextView)convertView.findViewById(R.id.price);
-            vh.tvItemPrice.setTypeface(Sitka);
+//            vh.tvItemPrice.setTypeface(Sitka);
             vh.ivItemPic = (ImageView)convertView.findViewById(R.id.image);
             convertView.setTag(vh);
         }
@@ -55,25 +57,25 @@ public class GridArrayAdapter extends ArrayAdapter
 
 
         if(item.itemName.equals("OnePlus 2"))
-            vh.ivItemPic.setImageResource(R.drawable.oneplus2);
+            Picasso.with(mContext).load(R.drawable.oneplus2).into(vh.ivItemPic);
         else if(item.itemName.equals("iPhone 6"))
-            vh.ivItemPic.setImageResource(R.drawable.iphone6);
+            Picasso.with(mContext).load(R.drawable.iphone6).into(vh.ivItemPic);
         else if(item.itemName.equals("Moto G"))
-            vh.ivItemPic.setImageResource(R.drawable.motog);
+            Picasso.with(mContext).load(R.drawable.motog).into(vh.ivItemPic);
         else if(item.itemName.equals("Blackberry"))
-            vh.ivItemPic.setImageResource(R.drawable.blackberry);
+            Picasso.with(mContext).load(R.drawable.oneplus2).into(vh.ivItemPic);
         else if(item.itemName.equals("Samsung Grand"))
-            vh.ivItemPic.setImageResource(R.drawable.grand);
+            Picasso.with(mContext).load(R.drawable.grand).into(vh.ivItemPic);
         else if(item.itemName.equals("Mi 4"))
-            vh.ivItemPic.setImageResource(R.drawable.xiaomimi4);
+            Picasso.with(mContext).load(R.drawable.xiaomimi4).into(vh.ivItemPic);
         else if(item.itemName.equals("Sony Xperia"))
-            vh.ivItemPic.setImageResource(R.drawable.xperia);
+            Picasso.with(mContext).load(R.drawable.xperia).into(vh.ivItemPic);
         else if(item.itemName.equals("Nexus 6"))
-            vh.ivItemPic.setImageResource(R.drawable.nexus6);
+            Picasso.with(mContext).load(R.drawable.nexus6).into(vh.ivItemPic);
         else if(item.itemName.equals("iPhone 5S"))
-            vh.ivItemPic.setImageResource(R.drawable.iphone5s);
+            Picasso.with(mContext).load(R.drawable.iphone6).into(vh.ivItemPic);
         else if(item.itemName.equals("Nokia 1100"))
-            vh.ivItemPic.setImageResource(R.drawable.nokia1100);
+            Picasso.with(mContext).load(R.drawable.nokia1100).into(vh.ivItemPic);
 
 
 

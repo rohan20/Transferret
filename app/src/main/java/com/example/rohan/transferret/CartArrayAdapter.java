@@ -26,6 +26,8 @@ public class CartArrayAdapter extends ArrayAdapter
     public class CartItemViewHolder
     {
         TextView tvName;
+        TextView tvQuantity;
+        TextView tvTotalCost;
     }
 
     @Override
@@ -37,6 +39,8 @@ public class CartArrayAdapter extends ArrayAdapter
             convertView = View.inflate(mContext, R.layout.cart_item_layout, null);
             CartItemViewHolder vh = new CartItemViewHolder();
             vh.tvName = (TextView)convertView.findViewById(R.id.textViewCartItemName);
+            vh.tvQuantity = (TextView)convertView.findViewById(R.id.quantity);
+            vh.tvTotalCost = (TextView)convertView.findViewById(R.id.totalCost);
             Typeface Sitka = Typeface.createFromAsset(getContext().getAssets(), "fonts/Sitka.ttc");
             vh.tvName.setTypeface(Sitka);
             convertView.setTag(vh);
@@ -45,7 +49,7 @@ public class CartArrayAdapter extends ArrayAdapter
         CartItemViewHolder vh = (CartItemViewHolder)convertView.getTag();
         CartItemList item = (CartItemList) getItem(position);
         vh.tvName.setText(item.itemName);
-
+        vh.tvTotalCost.setText("Rs." + item.itemPrice);
 
 
         return convertView;
