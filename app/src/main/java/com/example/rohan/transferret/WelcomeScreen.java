@@ -65,10 +65,9 @@ public class WelcomeScreen extends AppCompatActivity {
         textViewTransferret = (TextView)findViewById(R.id.tvTransferret);
 
         Typeface bernhc = Typeface.createFromAsset(getAssets(), "fonts/BERNHC.TTF");
-        Typeface Sitka = Typeface.createFromAsset(getAssets(), "fonts/Sitka.ttc");
+//        Typeface Sitka = Typeface.createFromAsset(getAssets(), "fonts/Sitka.ttc");
         textViewWelcomeTo.setTypeface(bernhc);
         textViewTransferret.setTypeface(bernhc);
-        buttonExplore.setTypeface(Sitka);
 
         Animation translation = AnimationUtils.loadAnimation(this, R.anim.translate);
         textViewWelcomeTo.startAnimation(translation);
@@ -86,48 +85,4 @@ public class WelcomeScreen extends AppCompatActivity {
 
 
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        buttonExplore = (Button)findViewById(R.id.bExplore);
-//        buttonExplore.setVisibility(View.INVISIBLE);
-//
-//        final Animation in = new AlphaAnimation(0.0f, 1.0f);
-//        in.setDuration(500);
-//
-//        timer = new CountDownTimer(3000, 1000)
-//        {
-//
-//            @Override
-//            public void onTick(long millisUntilFinished)
-//            {
-//
-//            }
-//
-//            @Override
-//            public void onFinish()
-//            {
-//                buttonExplore.setVisibility(View.VISIBLE);
-//                buttonExplore.setAnimation(in);
-//            }
-//        };
-//
-//        timer.start();
-//
-//
-//
-//        textViewWelcomeTo = (TextView)findViewById(R.id.tvWelcomeTo);
-//        textViewTransferret = (TextView)findViewById(R.id.tvTransferret);
-//
-//        Typeface bernhc = Typeface.createFromAsset(getAssets(), "fonts/BERNHC.TTF");
-//        Typeface Roboto_BlackItalic = Typeface.createFromAsset(getAssets(), "fonts/Roboto-BlackItalic.ttf");
-//        textViewWelcomeTo.setTypeface(bernhc);
-//        textViewTransferret.setTypeface(bernhc);
-//        buttonExplore.setTypeface(bernhc);
-//
-//        Animation translation = AnimationUtils.loadAnimation(this, R.anim.translate);
-//        textViewWelcomeTo.startAnimation(translation);
-//        textViewTransferret.startAnimation(translation);
-//    }
 }

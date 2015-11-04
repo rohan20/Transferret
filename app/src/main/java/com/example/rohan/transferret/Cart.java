@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
-import android.os.CountDownTimer;
+import android.net.Uri;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -40,8 +42,8 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
 
     CoordinatorLayout parentLayout;
 
-    long totalCartValue = 0;
     long priceOfThisProduct = 0;
+    public static long grandTotal = 0;
 
     String[] choices;
 
@@ -50,13 +52,16 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
         helper = new CartOpenHelper(this, null, 1);
         db = helper.getReadableDatabase();
 
-        String columns[] = {CartOpenHelper.CART_ITEM_NAME};
+        String columns[] = {CartOpenHelper.CART_ITEM_NAME, CartOpenHelper.CART_ITEM_PRICE};
         Cursor c = db.query(CartOpenHelper.CART_TABLE, columns, null, null, null, null, null);
 
         int i = 0;
-        String output[] = new String[c.getCount()];
+        String output[] = new String[2 * c.getCount()];
         while (c.moveToNext())
+        {
             output[i++] = c.getString(c.getColumnIndex(CartOpenHelper.CART_ITEM_NAME));
+            output[i++] = c.getString(c.getColumnIndex(CartOpenHelper.CART_ITEM_PRICE));
+        }
 
         return output;
 
@@ -75,16 +80,40 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
 
         cartList = (ListView)findViewById(R.id.cartListView2);
         tvTotalValue = (TextView)findViewById(R.id.totalValue);
+        tvTotalValue.setText("Total Cart Value: Rs. " + Cart.grandTotal);
         cartList.setOnItemClickListener(this);
-
-        Typeface Sitka = Typeface.createFromAsset(getAssets(), "fonts/Sitka.ttc");
-//        tvTotalValue.setTypeface(Sitka);
 
         String cartItems[] = getCartItems();
         cart = new ArrayList<>();
 
-        for(int i = 0; i < cartItems.length; i++)
-            cart.add(new CartItemList(cartItems[i], 5000, R.drawable.oneplus2));
+        for(int i = 0; i < cartItems.length; i+=2)
+        {
+            switch(cartItems[i])
+            {
+                case "OnePlus 2": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.oneplus2));
+                                    break;
+                case "iPhone 6": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.iphone6));
+                    break;
+                case "Moto G": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.motog));
+                    break;
+                case "Blackberry": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.oneplus2));
+                    break;
+                case "Samsung Grand": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.grand));
+                    break;
+                case "Mi 4": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.xiaomimi4));
+                    break;
+                case "Sony Xperia": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.xperia));
+                    break;
+                case "Nexus 6": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.nexus6));
+                    break;
+                case "iPhone 5S": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.iphone6));
+                    break;
+                case "Nokia 1100": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.nokia1100));
+                    break;
+
+            }
+        }
+
 
         adapter = new CartArrayAdapter(this, 0, cart);
         cartList.setAdapter(adapter);
@@ -112,10 +141,18 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
 
         if(id == R.id.action_call)
         {
-
+            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+            callIntent.setData(Uri.parse("tel:+919920712205"));
+            startActivity(callIntent);
         }
         if(id == R.id.action_email)
         {
+            Intent i = new Intent(Intent.ACTION_SENDTO);
+            i.setData(Uri.parse("mailto:rohan.bvcoe@gmail.com"));
+            i.putExtra(Intent.EXTRA_SUBJECT, "Internship Application");
+            if(i.resolveActivity(getPackageManager()) != null) {
+                startActivity(i);
+            }
 
         }
         if(id == R.id.action_goBack)
@@ -138,6 +175,9 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
 
                     cartList.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+
+                    Cart.grandTotal = 0;
+                    tvTotalValue.setText("Total Cart Value: Rs. " + Cart.grandTotal);
 
                     snackbar = Snackbar.make(parentLayout, "Cart is now empty.", Snackbar.LENGTH_SHORT);
                     snackbar.setAction("OK", null);
@@ -165,13 +205,50 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
         choices = new String[2];
         choices[0] = "Change Quantity";
         choices[1] = "Remove";
+
         final TextView tvQuantity = (TextView)view.findViewById(R.id.quantity);
         final TextView tvPrice = (TextView)view.findViewById(R.id.totalCost);
         final CartItemList item = (CartItemList) parent.getItemAtPosition(position);
 
         AlertDialog.Builder b = new AlertDialog.Builder(this);
+        b.setTitle(item.itemName + ": Rs. " + item.itemPrice);
 
-        b.setSingleChoiceItems(choices, 0, new DialogInterface.OnClickListener() {
+        switch(item.itemName)
+        {
+            case "OnePlus 2":
+                b.setIcon(R.drawable.oneplus2);
+                break;
+            case "iPhone 6":
+                b.setIcon(R.drawable.iphone6);
+                break;
+            case "Moto G":
+                b.setIcon(R.drawable.motog);
+                break;
+            case "Blackberry":
+                b.setIcon(R.drawable.oneplus2);
+                break;
+            case "Samsung Grand":
+                b.setIcon(R.drawable.grand);
+                break;
+            case "Mi 4":
+                b.setIcon(R.drawable.xiaomimi4);
+                break;
+            case "Sony Xperia":
+                b.setIcon(R.drawable.xperia);
+                break;
+            case "Nexus 6":
+                b.setIcon(R.drawable.nexus6);
+                break;
+            case "iPhone 5S":
+                b.setIcon(R.drawable.iphone6);
+                break;
+            case "Nokia 1100":
+                b.setIcon(R.drawable.nokia1100);
+                break;
+
+        }
+
+        b.setSingleChoiceItems(choices, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (choices[which].equals("Change Quantity")) {
@@ -200,15 +277,14 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
 
                     setQuantity.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v)
-                        {
+                        public void onClick(View v) {
                             Snackbar.make(parentLayout, "New Quantity: " + numberPicker.getValue(), Snackbar.LENGTH_SHORT).show();
-                            tvQuantity.setText("Quantity: " + numberPicker.getValue());
+                            tvQuantity.setText(numberPicker.getValue() + "");
                             priceOfThisProduct = (numberPicker.getValue() * item.itemPrice);
-                            tvPrice.setText("Rs." + priceOfThisProduct);
+                            Cart.grandTotal += priceOfThisProduct - Long.parseLong(tvPrice.getText().toString());
+                            tvPrice.setText(priceOfThisProduct + "");
                             d.dismiss();
-                            totalCartValue += numberPicker.getValue() * item.itemPrice;
-                            tvTotalValue.setText("Total Cart Value: Rs. " + totalCartValue);
+                            tvTotalValue.setText("Total Cart Value: Rs. " + Cart.grandTotal);
                         }
                     });
 
@@ -219,11 +295,12 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
                     helper = new CartOpenHelper(Cart.this, null, 1);
                     db = helper.getReadableDatabase();
 
-                    totalCartValue -= priceOfThisProduct;
-                    tvTotalValue.setText("Total Cart Value: Rs. " + totalCartValue);
+                    Cart.grandTotal -= Long.parseLong(tvPrice.getText().toString());
+                    tvTotalValue.setText("Total Cart Value: Rs. " + Cart.grandTotal);
 
                     Snackbar.make(view, item.itemName + " removed from cart.", Snackbar.LENGTH_SHORT).show();
                     cartList.setAdapter(adapter);
+
                     db.delete(CartOpenHelper.CART_TABLE, CartOpenHelper.CART_ITEM_NAME + " = " + "'" + item.itemName + "'", null);
                     cart.remove(adapter.getPosition(item));
                     adapter.notifyDataSetChanged();

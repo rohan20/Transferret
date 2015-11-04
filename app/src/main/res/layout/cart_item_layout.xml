@@ -26,8 +26,8 @@
         android:textColor="#B2DFDB"
         android:layout_gravity="center"
         android:gravity="center"
-        android:id="@+id/quantity"
-        android:text="Quantity: 1 "
+        android:id="@+id/quantityText"
+        android:text="Quantity: "
         />
 
     <TextView
@@ -36,9 +36,36 @@
         android:layout_weight="1"
         android:textColor="#B2DFDB"
         android:gravity="center"
-        android:id="@+id/totalCost"
-        android:text="Total Cost: "
+        android:id="@+id/totalCostText"
+        android:text="Rs. "
         />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="2">
+        <TextView
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:textColor="#B2DFDB"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/quantity"
+            android:text="1"
+            />
+
+        <TextView
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:textColor="#B2DFDB"
+            android:gravity="center"
+            android:id="@+id/totalCost"
+            />
 
     </LinearLayout>
 

@@ -67,13 +67,14 @@ public class ListArrayAdapter extends ArrayAdapter {
             {
                 AlertDialog.Builder b = new AlertDialog.Builder(getContext());
                 b.setTitle("Add to cart?");
-//                b.setIcon(R.drawable.oneplus2);
-//                b.setMessage("Price = Rs.25000");
 
                 b.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
                         cv.put("CartItemsName", "" + item.itemName);
+                        cv.put("CartItemsPrice", "" + item.itemPrice);
+                        Cart.grandTotal += item.itemPrice;
                         db.insert(CartOpenHelper.CART_TABLE, null, cv);
                         vh.ibAddToCart.setImageResource(R.drawable.ic_check_green_300_36dp);
                         Snackbar.make(finalConvertView, item.itemName + " added to cart.", Snackbar.LENGTH_SHORT).show();

@@ -12,6 +12,7 @@ public class CartOpenHelper extends SQLiteOpenHelper
 
     public final static String CART_TABLE = "CartItemsTable";
     public final static String CART_ITEM_NAME = "CartItemsName";
+    public final static String CART_ITEM_PRICE = "CartItemsPrice";
 
 
     public CartOpenHelper(Context context, SQLiteDatabase.CursorFactory factory, int version)
@@ -22,7 +23,8 @@ public class CartOpenHelper extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        db.execSQL("CREATE TABLE " + CART_TABLE + " ( " + CART_ITEM_NAME + " varchar(255))");
+        db.execSQL("CREATE TABLE " + CART_TABLE + " ( " + CART_ITEM_NAME + " varchar(255), " +
+                    CART_ITEM_PRICE + " integer )");
     }
 
     @Override

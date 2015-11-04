@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -94,10 +95,18 @@ public class Tabbed extends AppCompatActivity {
         if(id == R.id.action_call)
         {
 
+            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+            callIntent.setData(Uri.parse("tel:+919920712205"));
+            startActivity(callIntent);
         }
         if(id == R.id.action_email)
         {
-
+            Intent i = new Intent(Intent.ACTION_SENDTO);
+            i.setData(Uri.parse("mailto:rohan.bvcoe@gmail.com"));
+            i.putExtra(Intent.EXTRA_SUBJECT, "Internship Application");
+            if(i.resolveActivity(getPackageManager()) != null) {
+                startActivity(i);
+            }
         }
         if (id == R.id.action_showCart)
         {
@@ -265,67 +274,56 @@ public class Tabbed extends AppCompatActivity {
                         View v = inflater.inflate(R.layout.list_item_on_click, null);
                         b.setView(v);
                         ImageView iv = (ImageView)v.findViewById(R.id.listItemImage);
-//                        TextView tv = (TextView)v.findViewById(R.id.listItemPrice);
 
                         if(cartItemList[position].itemName.equals("OnePlus 2"))
                         {
                             b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
                             Picasso.with(getContext()).load(R.drawable.oneplus2).into(iv);
-//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice);
                         }
                         else if(cartItemList[position].itemName.equals("iPhone 6"))
                         {
                             b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
                             Picasso.with(getContext()).load(R.drawable.iphone6).into(iv);
-//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
                         }
                         else if(cartItemList[position].itemName.equals("Moto G"))
                         {
                             b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
                             Picasso.with(getContext()).load(R.drawable.motog).into(iv);
-//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
                         }
                         else if(cartItemList[position].itemName.equals("Blackberry"))
                         {
                             b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
                             Picasso.with(getContext()).load(R.drawable.oneplus2).into(iv);
-//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
                         }
                         else if(cartItemList[position].itemName.equals("Samsung Grand"))
                         {
                             b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
                             Picasso.with(getContext()).load(R.drawable.grand).into(iv);
-//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
                         }
                         else if(cartItemList[position].itemName.equals("Mi 4"))
                         {
                             b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
                             Picasso.with(getContext()).load(R.drawable.xiaomimi4).into(iv);
-//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
                         }
                         else if(cartItemList[position].itemName.equals("Sony Xperia"))
                         {
                             b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
                             Picasso.with(getContext()).load(R.drawable.xperia).into(iv);
-//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
                         }
                         else if(cartItemList[position].itemName.equals("Nexus 6"))
                         {
                             b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
                             Picasso.with(getContext()).load(R.drawable.nexus6).into(iv);
-//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
                         }
                         else if(cartItemList[position].itemName.equals("iPhone 5S"))
                         {
                             b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
                             Picasso.with(getContext()).load(R.drawable.iphone6).into(iv);
-//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
                         }
                         else if(cartItemList[position].itemName.equals("Nokia 1100"))
                         {
                             b.setTitle(cartItemList[position].itemName + ": Rs." + cartItemList[position].itemPrice);
                             Picasso.with(getContext()).load(R.drawable.nokia1100).into(iv);
-//                            tv.setText("Price: Rs." + cartItemList[position].itemPrice + "");
                         }
 
                         b.create().show();
@@ -336,7 +334,6 @@ public class Tabbed extends AppCompatActivity {
             else if(currentView == 0)
             {
                 rootView = inflater.inflate(R.layout.fragment_grid, container, false);
-//                Snackbar.make(rootView.findViewById(android.R.id.content), "Click on item to add to cart..", Snackbar.LENGTH_LONG).show();
                 grid = (GridView) rootView.findViewById(R.id.gridView);
 
                 cartItemGrid = new CartItemGrid[20];
@@ -371,11 +368,14 @@ public class Tabbed extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
                         AlertDialog.Builder b = new AlertDialog.Builder(getContext());
                         b.setMessage("Add to cart?");
-                        b.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        b.setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                        {
                             @Override
                             public void onClick(DialogInterface dialog, int which)
                             {
                                 cv.put("CartItemsName", cartItemGrid[position].itemName);
+                                cv.put("CartItemsPrice", "" + cartItemGrid[position].itemPrice);
+                                Cart.grandTotal += cartItemGrid[position].itemPrice;
                                 db.insert(CartOpenHelper.CART_TABLE, null, cv);
                                 Snackbar.make(view, cartItemGrid[position].itemName + " added to cart.", Snackbar.LENGTH_SHORT).show();
                             }

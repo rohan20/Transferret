@@ -49,7 +49,7 @@ public class CartArrayAdapter extends ArrayAdapter
         CartItemViewHolder vh = (CartItemViewHolder)convertView.getTag();
         CartItemList item = (CartItemList) getItem(position);
         vh.tvName.setText(item.itemName);
-        vh.tvTotalCost.setText("Rs." + item.itemPrice);
+        vh.tvTotalCost.setText("" + item.itemPrice);
 
 
         return convertView;
