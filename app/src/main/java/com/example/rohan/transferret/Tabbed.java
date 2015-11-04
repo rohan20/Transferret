@@ -241,26 +241,26 @@ public class Tabbed extends AppCompatActivity {
 
                 cartItemList = new CartItemList[20];
 
-                cartItemList[0] = new CartItemList("OnePlus 2", 25000, R.drawable.oneplus2);
-                cartItemList[1] = new CartItemList("iPhone 6", 60000, R.drawable.iphone6);
-                cartItemList[2] = new CartItemList("Moto G", 8000, R.drawable.motog);
-                cartItemList[3] = new CartItemList("Blackberry", 15000, R.drawable.oneplus2);
-                cartItemList[4] = new CartItemList("Samsung Grand", 10000, R.drawable.grand);
-                cartItemList[5] = new CartItemList("Mi 4", 10000, R.drawable.xiaomimi4);
-                cartItemList[6] = new CartItemList("Sony Xperia", 6000, R.drawable.xperia);
-                cartItemList[7] = new CartItemList("Nexus 6", 24000, R.drawable.nexus6);
-                cartItemList[8] = new CartItemList("iPhone 5S", 40000, R.drawable.iphone6);
-                cartItemList[9] = new CartItemList("Nokia 1100", 150, R.drawable.nokia1100);
-                cartItemList[10] = new CartItemList("OnePlus 2", 25000, R.drawable.oneplus2);
-                cartItemList[11] = new CartItemList("iPhone 6", 60000, R.drawable.iphone6);
-                cartItemList[12] = new CartItemList("Moto G", 8000, R.drawable.motog);
-                cartItemList[13] = new CartItemList("Blackberry", 15000, R.drawable.oneplus2);
-                cartItemList[14] = new CartItemList("Samsung Grand", 10000, R.drawable.grand);
-                cartItemList[15] = new CartItemList("Mi 4", 10000, R.drawable.xiaomimi4);
-                cartItemList[16] = new CartItemList("Sony Xperia", 6000, R.drawable.xperia);
-                cartItemList[17] = new CartItemList("Nexus 6", 24000, R.drawable.nexus6);
-                cartItemList[18] = new CartItemList("iPhone 5S", 40000, R.drawable.iphone6);
-                cartItemList[19] = new CartItemList("Nokia 1100", 150, R.drawable.nokia1100);
+                cartItemList[0] = new CartItemList("OnePlus 2", 25000, 1, R.drawable.oneplus2, null, 25000);
+                cartItemList[1] = new CartItemList("iPhone 6", 60000, 1, R.drawable.iphone6, null, 60000);
+                cartItemList[2] = new CartItemList("Moto G", 8000, 1, R.drawable.motog, null, 8000);
+                cartItemList[3] = new CartItemList("Blackberry", 15000, 1, R.drawable.oneplus2, null, 15000);
+                cartItemList[4] = new CartItemList("Samsung Grand", 10000, 1, R.drawable.grand, null, 10000);
+                cartItemList[5] = new CartItemList("Mi 4", 10000, 1, R.drawable.xiaomimi4, null, 10000);
+                cartItemList[6] = new CartItemList("Sony Xperia", 6000, 1, R.drawable.xperia, null, 6000);
+                cartItemList[7] = new CartItemList("Nexus 6", 24000, 1, R.drawable.nexus6, null, 24000);
+                cartItemList[8] = new CartItemList("iPhone 5S", 40000, 1, R.drawable.iphone6, null, 40000);
+                cartItemList[9] = new CartItemList("Nokia 1100", 150, 1, R.drawable.nokia1100, null, 150);
+                cartItemList[10] = new CartItemList("OnePlus 2", 25000, 1, R.drawable.oneplus2, null, 25000);
+                cartItemList[11] = new CartItemList("iPhone 6", 60000, 1, R.drawable.iphone6, null, 60000);
+                cartItemList[12] = new CartItemList("Moto G", 8000, 1, R.drawable.motog, null, 8000);
+                cartItemList[13] = new CartItemList("Blackberry", 15000, 1, R.drawable.oneplus2, null, 15000);
+                cartItemList[14] = new CartItemList("Samsung Grand", 10000, 1, R.drawable.grand, null, 10000);
+                cartItemList[15] = new CartItemList("Mi 4", 10000, 1, R.drawable.xiaomimi4, null, 10000);
+                cartItemList[16] = new CartItemList("Sony Xperia", 6000, 1, R.drawable.xperia, null, 6000);
+                cartItemList[17] = new CartItemList("Nexus 6", 24000, 1, R.drawable.nexus6, null, 24000);
+                cartItemList[18] = new CartItemList("iPhone 5S", 40000, 1, R.drawable.iphone6, null, 40000);
+                cartItemList[19] = new CartItemList("Nokia 1100", 150, 1, R.drawable.nokia1100, null, 150);
 
                 ListArrayAdapter files = new ListArrayAdapter(getContext(), 0, cartItemList);
                 lvList.setAdapter(files);
@@ -338,26 +338,26 @@ public class Tabbed extends AppCompatActivity {
 
                 cartItemGrid = new CartItemGrid[20];
 
-                cartItemGrid[0] = new CartItemGrid("OnePlus 2", 25000, R.drawable.oneplus2);
-                cartItemGrid[1] = new CartItemGrid("iPhone 6", 60000, R.drawable.iphone6);
-                cartItemGrid[2] = new CartItemGrid("Moto G", 8000, R.drawable.motog);
-                cartItemGrid[3] = new CartItemGrid("Blackberry", 15000, R.drawable.oneplus2);
-                cartItemGrid[4] = new CartItemGrid("Samsung Grand", 10000, R.drawable.grand);
-                cartItemGrid[5] = new CartItemGrid("Mi 4", 10000, R.drawable.xiaomimi4);
-                cartItemGrid[6] = new CartItemGrid("Sony Xperia", 6000, R.drawable.xperia);
-                cartItemGrid[7] = new CartItemGrid("Nexus 6", 24000, R.drawable.nexus6);
-                cartItemGrid[8] = new CartItemGrid("iPhone 5S", 40000, R.drawable.iphone6);
-                cartItemGrid[9] = new CartItemGrid("Nokia 1100", 150, R.drawable.nokia1100);
-                cartItemGrid[10] = new CartItemGrid("OnePlus 2", 25000, R.drawable.oneplus2);
-                cartItemGrid[11] = new CartItemGrid("iPhone 6", 60000, R.drawable.iphone6);
-                cartItemGrid[12] = new CartItemGrid("Moto G", 8000, R.drawable.motog);
-                cartItemGrid[13] = new CartItemGrid("Blackberry", 15000, R.drawable.oneplus2);
-                cartItemGrid[14] = new CartItemGrid("Samsung Grand", 10000, R.drawable.grand);
-                cartItemGrid[15] = new CartItemGrid("Mi 4", 10000, R.drawable.xiaomimi4);
-                cartItemGrid[16] = new CartItemGrid("Sony Xperia", 6000, R.drawable.xperia);
-                cartItemGrid[17] = new CartItemGrid("Nexus 6", 24000, R.drawable.nexus6);
-                cartItemGrid[18] = new CartItemGrid("iPhone 5S", 40000, R.drawable.iphone6);
-                cartItemGrid[19] = new CartItemGrid("Nokia 1100", 150, R.drawable.nokia1100);
+                cartItemGrid[0] = new CartItemGrid("OnePlus 2", 25000, 1, R.drawable.oneplus2, null, 25000);
+                cartItemGrid[1] = new CartItemGrid("iPhone 6", 60000, 1, R.drawable.iphone6, null, 60000);
+                cartItemGrid[2] = new CartItemGrid("Moto G", 8000, 1, R.drawable.motog, null, 8000);
+                cartItemGrid[3] = new CartItemGrid("Blackberry", 15000, 1, R.drawable.oneplus2, null, 15000);
+                cartItemGrid[4] = new CartItemGrid("Samsung Grand", 10000, 1, R.drawable.grand, null, 10000);
+                cartItemGrid[5] = new CartItemGrid("Mi 4", 10000, 1, R.drawable.xiaomimi4, null, 10000);
+                cartItemGrid[6] = new CartItemGrid("Sony Xperia", 6000, 1, R.drawable.xperia, null, 6000);
+                cartItemGrid[7] = new CartItemGrid("Nexus 6", 24000, 1, R.drawable.nexus6, null, 24000);
+                cartItemGrid[8] = new CartItemGrid("iPhone 5S", 40000, 1, R.drawable.iphone6, null, 40000);
+                cartItemGrid[9] = new CartItemGrid("Nokia 1100", 150, 1, R.drawable.nokia1100, null, 150);
+                cartItemGrid[10] = new CartItemGrid("OnePlus 2", 25000, 1, R.drawable.oneplus2, null, 25000);
+                cartItemGrid[11] = new CartItemGrid("iPhone 6", 60000, 1, R.drawable.iphone6, null, 60000);
+                cartItemGrid[12] = new CartItemGrid("Moto G", 8000, 1, R.drawable.motog, null, 8000);
+                cartItemGrid[13] = new CartItemGrid("Blackberry", 15000, 1, R.drawable.oneplus2, null, 15000);
+                cartItemGrid[14] = new CartItemGrid("Samsung Grand", 10000, 1, R.drawable.grand, null, 10000);
+                cartItemGrid[15] = new CartItemGrid("Mi 4", 10000, 1, R.drawable.xiaomimi4, null, 10000);
+                cartItemGrid[16] = new CartItemGrid("Sony Xperia", 6000, 1, R.drawable.xperia, null, 6000);
+                cartItemGrid[17] = new CartItemGrid("Nexus 6", 24000, 1, R.drawable.nexus6, null, 24000);
+                cartItemGrid[18] = new CartItemGrid("iPhone 5S", 40000, 1, R.drawable.iphone6, null, 40000);
+                cartItemGrid[19] = new CartItemGrid("Nokia 1100", 150, 1, R.drawable.nokia1100, null, 150);
 
 
                 GridArrayAdapter files = new GridArrayAdapter(getContext(), R.layout.cart_item_layout, cartItemGrid);
@@ -374,8 +374,13 @@ public class Tabbed extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which)
                             {
                                 cv.put("CartItemsName", cartItemGrid[position].itemName);
-                                cv.put("CartItemsPrice", "" + cartItemGrid[position].itemPrice);
+                                cv.put("CartItemsPrice", cartItemGrid[position].itemPrice);
+                                cv.put("CartItemsPriceTotal", cartItemGrid[position].itemPrice);
+                                cv.put("CartItemsQuantity", 1);
+                                cv.put("CartItemsTimeStamp", System.currentTimeMillis());
+
                                 Cart.grandTotal += cartItemGrid[position].itemPrice;
+
                                 db.insert(CartOpenHelper.CART_TABLE, null, cv);
                                 Snackbar.make(view, cartItemGrid[position].itemName + " added to cart.", Snackbar.LENGTH_SHORT).show();
                             }

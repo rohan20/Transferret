@@ -2,11 +2,11 @@ package com.example.rohan.transferret;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -23,14 +23,12 @@ import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 
 public class Cart extends AppCompatActivity implements AdapterView.OnItemClickListener
 {
 
-    TextView tvTotalValue;
+    TextView tvCartValue;
     ListView cartList;
     ArrayList<CartItemList> cart;
 
@@ -45,6 +43,8 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
     long priceOfThisProduct = 0;
     public static long grandTotal = 0;
 
+    ContentValues cv;
+
     String[] choices;
 
     public String[] getCartItems()
@@ -52,15 +52,18 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
         helper = new CartOpenHelper(this, null, 1);
         db = helper.getReadableDatabase();
 
-        String columns[] = {CartOpenHelper.CART_ITEM_NAME, CartOpenHelper.CART_ITEM_PRICE};
+        String columns[] = {CartOpenHelper.CART_ITEM_NAME, CartOpenHelper.CART_ITEM_PRICE, CartOpenHelper.CART_ITEM_QUANTITY, CartOpenHelper.CART_ITEM_TIMESTAMP, CartOpenHelper.CART_ITEM_PRICE_TOTAL};
         Cursor c = db.query(CartOpenHelper.CART_TABLE, columns, null, null, null, null, null);
 
         int i = 0;
-        String output[] = new String[2 * c.getCount()];
+        String output[] = new String[5 * c.getCount()];
         while (c.moveToNext())
         {
             output[i++] = c.getString(c.getColumnIndex(CartOpenHelper.CART_ITEM_NAME));
             output[i++] = c.getString(c.getColumnIndex(CartOpenHelper.CART_ITEM_PRICE));
+            output[i++] = c.getString(c.getColumnIndex(CartOpenHelper.CART_ITEM_QUANTITY));
+            output[i++] = c.getString(c.getColumnIndex(CartOpenHelper.CART_ITEM_TIMESTAMP));
+            output[i++] = c.getString(c.getColumnIndex(CartOpenHelper.CART_ITEM_PRICE_TOTAL));
         }
 
         return output;
@@ -68,9 +71,19 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        loadActivity();
+
+    }
+
+
+    public void loadActivity()
+    {
+        cv = new ContentValues();
 
         parentLayout = (CoordinatorLayout)findViewById(R.id.coordinatorLayout);
         setTitle("Your Cart");
@@ -79,36 +92,36 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
         setSupportActionBar(toolbar);
 
         cartList = (ListView)findViewById(R.id.cartListView2);
-        tvTotalValue = (TextView)findViewById(R.id.totalValue);
-        tvTotalValue.setText("Total Cart Value: Rs. " + Cart.grandTotal);
+        tvCartValue = (TextView)findViewById(R.id.totalValue);
+        tvCartValue.setText("Total Cart Value: Rs. " + Cart.grandTotal);
         cartList.setOnItemClickListener(this);
 
         String cartItems[] = getCartItems();
         cart = new ArrayList<>();
 
-        for(int i = 0; i < cartItems.length; i+=2)
+        for(int i = 0; i < cartItems.length; i+=5)
         {
             switch(cartItems[i])
             {
-                case "OnePlus 2": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.oneplus2));
-                                    break;
-                case "iPhone 6": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.iphone6));
+                case "OnePlus 2": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), Long.parseLong(cartItems[i+2]), R.drawable.oneplus2, cartItems[i+3], Long.parseLong(cartItems[i+4])));
                     break;
-                case "Moto G": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.motog));
+                case "iPhone 6": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), Long.parseLong(cartItems[i+2]), R.drawable.iphone6, cartItems[i+3], Long.parseLong(cartItems[i+4])));
                     break;
-                case "Blackberry": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.oneplus2));
+                case "Moto G": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), Long.parseLong(cartItems[i+2]), R.drawable.motog, cartItems[i+3], Long.parseLong(cartItems[i+4])));
                     break;
-                case "Samsung Grand": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.grand));
+                case "Blackberry": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), Long.parseLong(cartItems[i + 2]), R.drawable.oneplus2, cartItems[i+3], Long.parseLong(cartItems[i+4])));
                     break;
-                case "Mi 4": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.xiaomimi4));
+                case "Samsung Grand": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i + 1]), Long.parseLong(cartItems[i+2]), R.drawable.grand, cartItems[i+3], Long.parseLong(cartItems[i+4])));
                     break;
-                case "Sony Xperia": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.xperia));
+                case "Mi 4": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), Long.parseLong(cartItems[i + 2]), R.drawable.xiaomimi4, cartItems[i+3], Long.parseLong(cartItems[i+4])));
                     break;
-                case "Nexus 6": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.nexus6));
+                case "Sony Xperia": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), Long.parseLong(cartItems[i+2]), R.drawable.xperia, cartItems[i+3], Long.parseLong(cartItems[i+4])));
                     break;
-                case "iPhone 5S": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.iphone6));
+                case "Nexus 6": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), Long.parseLong(cartItems[i + 2]), R.drawable.nexus6, cartItems[i+3], Long.parseLong(cartItems[i+4])));
                     break;
-                case "Nokia 1100": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), R.drawable.nokia1100));
+                case "iPhone 5S": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), Long.parseLong(cartItems[i + 2]), R.drawable.iphone6, cartItems[i+3], Long.parseLong(cartItems[i+4])));
+                    break;
+                case "Nokia 1100": cart.add(new CartItemList(cartItems[i], Long.parseLong(cartItems[i+1]), Long.parseLong(cartItems[i + 2]), R.drawable.nokia1100, cartItems[i+3], Long.parseLong(cartItems[i+4])));
                     break;
 
             }
@@ -120,6 +133,7 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
         adapter.notifyDataSetChanged();
 
     }
+
 
 
 
@@ -177,7 +191,7 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
                     adapter.notifyDataSetChanged();
 
                     Cart.grandTotal = 0;
-                    tvTotalValue.setText("Total Cart Value: Rs. " + Cart.grandTotal);
+                    tvCartValue.setText("Total Cart Value: Rs. " + Cart.grandTotal);
 
                     snackbar = Snackbar.make(parentLayout, "Cart is now empty.", Snackbar.LENGTH_SHORT);
                     snackbar.setAction("OK", null);
@@ -208,7 +222,7 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
 
         final TextView tvQuantity = (TextView)view.findViewById(R.id.quantity);
         final TextView tvPrice = (TextView)view.findViewById(R.id.totalCost);
-        final CartItemList item = (CartItemList) parent.getItemAtPosition(position);
+        final CartItemList item = (CartItemList) adapter.getItem(position);
 
         AlertDialog.Builder b = new AlertDialog.Builder(this);
         b.setTitle(item.itemName + ": Rs. " + item.itemPrice);
@@ -278,13 +292,26 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
                     setQuantity.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Snackbar.make(parentLayout, "New Quantity: " + numberPicker.getValue(), Snackbar.LENGTH_SHORT).show();
-                            tvQuantity.setText(numberPicker.getValue() + "");
+//                            Snackbar.make(parentLayout, "New Quantity: " + numberPicker.getValue(), Snackbar.LENGTH_SHORT).show();
                             priceOfThisProduct = (numberPicker.getValue() * item.itemPrice);
+                            Snackbar.make(parentLayout, "New Quantity: " + priceOfThisProduct, Snackbar.LENGTH_SHORT).show();
+
+                            cv.put("CartItemsName", "" + item.itemName);
+                            cv.put("CartItemsPrice", item.itemPrice);
+                            cv.put("CartItemsPriceTotal", priceOfThisProduct);
+                            cv.put("CartItemsQuantity", numberPicker.getValue());
+                            cv.put("CartItemsTimeStamp", System.currentTimeMillis());
+                            db.insert(CartOpenHelper.CART_TABLE, null, cv);
+
                             Cart.grandTotal += priceOfThisProduct - Long.parseLong(tvPrice.getText().toString());
+
+                            tvQuantity.setText(numberPicker.getValue() + "");
                             tvPrice.setText(priceOfThisProduct + "");
+                            tvCartValue.setText("Total Cart Value: Rs. " + Cart.grandTotal);
+
                             d.dismiss();
-                            tvTotalValue.setText("Total Cart Value: Rs. " + Cart.grandTotal);
+                            db.delete(CartOpenHelper.CART_TABLE, CartOpenHelper.CART_ITEM_TIMESTAMP + " = " + "'" + item.itemTimeStamp + "'", null);
+                            loadActivity();
                         }
                     });
 
@@ -296,12 +323,12 @@ public class Cart extends AppCompatActivity implements AdapterView.OnItemClickLi
                     db = helper.getReadableDatabase();
 
                     Cart.grandTotal -= Long.parseLong(tvPrice.getText().toString());
-                    tvTotalValue.setText("Total Cart Value: Rs. " + Cart.grandTotal);
+                    tvCartValue.setText("Total Cart Value: Rs. " + Cart.grandTotal);
 
                     Snackbar.make(view, item.itemName + " removed from cart.", Snackbar.LENGTH_SHORT).show();
                     cartList.setAdapter(adapter);
 
-                    db.delete(CartOpenHelper.CART_TABLE, CartOpenHelper.CART_ITEM_NAME + " = " + "'" + item.itemName + "'", null);
+                    db.delete(CartOpenHelper.CART_TABLE, CartOpenHelper.CART_ITEM_TIMESTAMP + " = " + "'" + item.itemTimeStamp + "'", null);
                     cart.remove(adapter.getPosition(item));
                     adapter.notifyDataSetChanged();
                 } else

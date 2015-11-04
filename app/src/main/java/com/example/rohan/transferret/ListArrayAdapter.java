@@ -73,7 +73,10 @@ public class ListArrayAdapter extends ArrayAdapter {
                     public void onClick(DialogInterface dialog, int which)
                     {
                         cv.put("CartItemsName", "" + item.itemName);
-                        cv.put("CartItemsPrice", "" + item.itemPrice);
+                        cv.put("CartItemsPrice", item.itemPrice);
+                        cv.put("CartItemsPriceTotal", item.itemPrice);
+                        cv.put("CartItemsQuantity", 1);
+                        cv.put("CartItemsTimeStamp", System.currentTimeMillis());
                         Cart.grandTotal += item.itemPrice;
                         db.insert(CartOpenHelper.CART_TABLE, null, cv);
                         vh.ibAddToCart.setImageResource(R.drawable.ic_check_green_300_36dp);

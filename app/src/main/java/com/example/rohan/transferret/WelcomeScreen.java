@@ -40,7 +40,7 @@ public class WelcomeScreen extends AppCompatActivity {
         final Animation in = new AlphaAnimation(0.0f, 1.0f);
         in.setDuration(1000);
 
-        timer = new CountDownTimer(2000, 1000)
+        timer = new CountDownTimer(1500, 1000)
         {
 
             @Override
@@ -65,9 +65,10 @@ public class WelcomeScreen extends AppCompatActivity {
         textViewTransferret = (TextView)findViewById(R.id.tvTransferret);
 
         Typeface bernhc = Typeface.createFromAsset(getAssets(), "fonts/BERNHC.TTF");
-//        Typeface Sitka = Typeface.createFromAsset(getAssets(), "fonts/Sitka.ttc");
+        Typeface Sitka = Typeface.createFromAsset(getAssets(), "fonts/Sitka.ttc");
         textViewWelcomeTo.setTypeface(bernhc);
         textViewTransferret.setTypeface(bernhc);
+        buttonExplore.setTypeface(Sitka);
 
         Animation translation = AnimationUtils.loadAnimation(this, R.anim.translate);
         textViewWelcomeTo.startAnimation(translation);
